@@ -40,11 +40,9 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function registerIsbnClient(): void
     {
-        $this->app->bind(IsbnClient::class, function ($app) {
-            return new IsbnClient(
-                env('ISBN_USERNAME'),
-                env('ISBN_PASSWORD')
-            );
+        $this->app->bind(IsbnClient::class, function () {
+            /** @phpstan-ignore-next-line */
+            return new IsbnClient(config('app.isbn_username'), config('app.isbn_password'));
         });
     }
 
@@ -101,6 +99,6 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function configurePasswordValidation(): void
     {
-        Password::defaults(fn() => app()->isProduction() ? Password::min(8)->uncompromised() : null);
+        Password::defaults(fn () => app()->isProduction() ? Password::min(8)->uncompromised() : null);
     }
 }

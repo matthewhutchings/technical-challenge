@@ -6,15 +6,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CreateBookRequest;
 use App\Services\BookService;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 final class CreateBookController
 {
+    private BookService $bookService;
 
-    protected $bookService;
-
-    // Inject the BookService via the constructor
     public function __construct(BookService $bookService)
     {
         $this->bookService = $bookService;
@@ -22,13 +19,11 @@ final class CreateBookController
 
     /**
      * Handle the incoming request to create a new book.
-     *
-     * @param  \App\Http\Requests\CreateBookRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(CreateBookRequest $request)
+    public function __invoke(CreateBookRequest $request): JsonResponse
     {
-        // Use the validated data from the request
+        // Ensure the validated data adheres to the expected structure
+        /** @var array{title: string, type: string, collector_id: int} $validated */
         $validated = $request->validated();
 
         // Delegate to the BookService to create the book

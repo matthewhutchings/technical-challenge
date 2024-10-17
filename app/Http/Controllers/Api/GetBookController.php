@@ -6,9 +6,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\BookService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
 
 final class GetBookController
 {
@@ -24,10 +24,6 @@ final class GetBookController
 
     /**
      * Handle the incoming request.
-     *
-     * @param Request $request
-     * @param string $uuid
-     * @return JsonResponse
      */
     public function __invoke(Request $request, string $uuid): JsonResponse
     {

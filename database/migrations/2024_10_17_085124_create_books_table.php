@@ -19,6 +19,7 @@ class CreateBooksTable extends Migration
             // UUID field for the book, acting as the primary key
             $table->uuid('uuid')->primary();
 
+            $table->string('isbn')->nullable();
             // Title of the book, a required string field
             $table->string('title');
 

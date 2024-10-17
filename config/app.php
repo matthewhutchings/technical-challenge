@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'isbn_username' => env('ISBN_USERNAME', ''),
+    'isbn_password' => env('ISBN_PASSWORD', ''),
 ];
