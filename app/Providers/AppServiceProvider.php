@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Client\IsbnClient;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -24,6 +25,27 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureModels();
         $this->configureMorphMap();
         $this->configurePasswordValidation();
+    }
+
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->registerIsbnClient(); // Register the IsbnClient in the container
+    }
+
+    /**
+     * Register the IsbnClient binding.
+     */
+    private function registerIsbnClient(): void
+    {
+        $this->app->bind(IsbnClient::class, function ($app) {
+            return new IsbnClient(
+                env('ISBN_USERNAME'),
+                env('ISBN_PASSWORD')
+            );
+        });
     }
 
     /**
@@ -79,6 +101,6 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function configurePasswordValidation(): void
     {
-        Password::defaults(fn () => app()->isProduction() ? Password::min(8)->uncompromised() : null);
+        Password::defaults(fn() => app()->isProduction() ? Password::min(8)->uncompromised() : null);
     }
 }
